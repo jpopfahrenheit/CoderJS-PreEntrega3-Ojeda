@@ -120,7 +120,7 @@ function agregarProductoAlCarrito(e, productos) {
         carrito[posProductoEnCarrito].subtotal = carrito[posProductoEnCarrito].precioUnitario * carrito[posProductoEnCarrito].unidades
     } else {
         carrito.push({
-            id: productoBuscado.id, nombre: productoBuscado.nombre, precioUnitario: productoBuscado.precio, unidades: 1, subtotal: productoBuscado.precio
+            id: productoBuscado.id, nombre: productoBuscado.nombre, precioUnitario: productoBuscado.precio, unidades: 1, subtotal: productoBuscado.precio, rutaImagen: productoBuscado.rutaImagen
         })
     }
 
@@ -154,6 +154,56 @@ function limpiarInput() {
     document.getElementById("inputBusqueda").value = ""
 }
 
-function renderizarCarrito(carrito) {
+function renderizarCarrito() {
+    let carrito = carritoLS()
+    let contenedorCarrito = document.getElementById("contenedorCarrito")
+    contenedorCarrito.innerHTML = `<h2>Carrito de compras</h2>`
 
+
+    carrito.forEach(producto => {
+        let tarjetaProductoCarrito = document.createElement("div")
+        tarjetaProductoCarrito.className = "tarjetaProductoCarrito"
+        tarjetaProductoCarrito.id = "tarjetaProductoCarrito" + producto.id
+        tarjetaProductoCarrito.innerHTML = `
+        <img src=${producto.rutaImagen}></img>
+        <p>${producto.nombre}</p>
+        <p>$${producto.precioUnitario.toLocaleString()}</p>
+        <div class=unidades>
+            <button id=dec${producto.id}>-</button>
+            <p>${producto.unidades}</p>
+            <button id=inc${producto.id}>+</button>
+        </div>
+        <p>$${producto.subtotal.toLocaleString()}</p>
+        <button id=eliminar${producto.id}>Eliminar</button>
+        `
+        contenedorCarrito.appendChild(tarjetaProductoCarrito)
+
+    
+
+        //let botonDecUnidad = document.getElementById("dec" + producto.id)
+        //botonDecUnidad.addEventListener("click", decrementarUnidad)
+
+        //let botonIncUnidad = document.getElementById("inc" + producto.id)
+        //botonIncUnidad.addEventListener("click", incrementarUnidad)
+
+        //let botonEliminar = document.getElementById("eliminar" + producto.id)
+        //botonEliminar.addEventListener("click", eliminarProductoDelCarrito)
+
+    })
+    let totalCompra = calcularTotalCompra(carrito)
+
+    let totalDiv = document.createElement("div")
+    totalDiv.className = "totalCompra"
+    totalDiv.innerHTML = `<p>Total de la compra: $${totalCompra}</p>`
+    console.log(totalCompra)
+    contenedorCarrito.appendChild(totalDiv);
+
+}
+
+function calcularTotalCompra(carrito) {
+    let total = 0;
+    carrito.forEach(producto => {
+        total += producto.subtotal;
+    });
+    return total.toLocaleString();
 }
