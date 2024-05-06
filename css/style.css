@@ -26,9 +26,9 @@ body {
     top: 0;
     width: 100%;
     z-index: 1000; /* Asegura que el encabezado esté por encima de otros elementos */
+    letter-spacing: 3px;
 
 }
-
 
 .logo {
     max-height: 70px;
