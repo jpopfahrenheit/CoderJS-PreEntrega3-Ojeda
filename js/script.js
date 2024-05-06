@@ -48,7 +48,7 @@ function principal(productos) {
     renderizarCarrito(carrito)
 
     renderizarProductos(productos)
-    
+
     let botonMostrarOcultar1 = document.getElementById("botonCarrito")
     botonMostrarOcultar1.addEventListener("click", mostrarOcultar)
 
@@ -106,10 +106,16 @@ function agregarProductoAlCarrito(e, productos) {
 
     if (posProductoEnCarrito !== -1) {
         carrito[posProductoEnCarrito].unidades++
-        carrito[posProductoEnCarrito].subtotal = carrito[posProductoEnCarrito].precioUnitario * carrito[posProductoEnCarrito].unidades
+        carrito[posProductoEnCarrito].subtotal = carrito[posProductoEnCarrito].precio * carrito[posProductoEnCarrito].unidades
     } else {
         carrito.push({
-            id: productoBuscado.id, nombre: productoBuscado.nombre, precioUnitario: productoBuscado.precio, unidades: 1, subtotal: productoBuscado.precio, rutaImagen: productoBuscado.rutaImagen
+            id: productoBuscado.id,
+            nombre: productoBuscado.nombre,
+            genero: productoBuscado.genero,
+            precio: productoBuscado.precio,
+            unidades: 1,
+            subtotal: productoBuscado.precio,
+            rutaImagen: productoBuscado.rutaImagen
         })
     }
 
@@ -148,30 +154,31 @@ function renderizarCarrito() {
     let contenedorCarrito = document.getElementById("contenedorCarrito")
     contenedorCarrito.innerHTML = `<h2>Carrito de compras</h2>`
     carrito.forEach(producto => {
+        let { id, nombre, genero, precio, rutaImagen, stock, unidades, subtotal } = producto
         let tarjetaProductoCarrito = document.createElement("div")
         tarjetaProductoCarrito.className = "tarjetaProductoCarrito"
-        tarjetaProductoCarrito.id = "tarjetaProductoCarrito" + producto.id
+        tarjetaProductoCarrito.id = "tarjetaProductoCarrito" + id
         tarjetaProductoCarrito.innerHTML = `
-        <img class=miniatura src=${producto.rutaImagen}></img>
-        <p>${producto.nombre}</p>
-        <p>$${producto.precioUnitario.toLocaleString()}</p>
+        <img class=miniatura src=${rutaImagen}></img>
+        <p>${nombre} | ${genero}</p>
+        <p>$${precio.toLocaleString()}</p>
         <div class=unidades>
-            <button id=dec${producto.id}>-</button>
-            <p>${producto.unidades}</p>
-            <button id=inc${producto.id}>+</button>
+            <button id=dec${id}>-</button>
+            <p>${unidades}</p>
+            <button id=inc${id}>+</button>
         </div>
-        <p>$${producto.subtotal.toLocaleString()}</p>
-        <img src="img/basura.png" class="basura" id=eliminar${producto.id}></img>
+        <p>$${subtotal.toLocaleString()}</p>
+        <img src="img/basura.png" class="basura" id=eliminar${id}></img>
         `
         contenedorCarrito.appendChild(tarjetaProductoCarrito)
 
-        let botonDecUnidad = document.getElementById("dec" + producto.id)
+        let botonDecUnidad = document.getElementById("dec" + id)
         botonDecUnidad.addEventListener("click", decrementarUnidad)
 
-        let botonIncUnidad = document.getElementById("inc" + producto.id)
+        let botonIncUnidad = document.getElementById("inc" + id)
         botonIncUnidad.addEventListener("click", incrementarUnidad)
 
-        let botonEliminar = document.getElementById("eliminar" + producto.id)
+        let botonEliminar = document.getElementById("eliminar" + id)
         botonEliminar.addEventListener("click", eliminarProductoDelCarrito)
 
     })
@@ -203,7 +210,7 @@ function incrementarUnidad(e) {
     let id = Number(e.target.id.substring(3))
     let posProdEnCarrito = carrito.findIndex(producto => producto.id === id)
     carrito[posProdEnCarrito].unidades++
-    carrito[posProdEnCarrito].subtotal = carrito[posProdEnCarrito].unidades * carrito[posProdEnCarrito].precioUnitario
+    carrito[posProdEnCarrito].subtotal = carrito[posProdEnCarrito].unidades * carrito[posProdEnCarrito].precio
     localStorage.setItem("carrito", JSON.stringify(carrito))
     renderizarCarrito()
 }
@@ -212,10 +219,13 @@ function decrementarUnidad(e) {
     let carrito = carritoLS()
     let id = Number(e.target.id.substring(3))
     let posProdEnCarrito = carrito.findIndex(producto => producto.id === id)
-    carrito[posProdEnCarrito].unidades--
-    carrito[posProdEnCarrito].subtotal = carrito[posProdEnCarrito].unidades * carrito[posProdEnCarrito].precioUnitario
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-    renderizarCarrito()
+    if(carrito[posProdEnCarrito].unidades >= 1){
+        carrito[posProdEnCarrito].unidades--
+        carrito[posProdEnCarrito].subtotal = carrito[posProdEnCarrito].unidades * carrito[posProdEnCarrito].precio
+        localStorage.setItem("carrito", JSON.stringify(carrito))    
+        renderizarCarrito()    
+    }
+    
 }
 
 function mostrarOcultar(e) {
@@ -241,5 +251,5 @@ function eliminarProductoDelCarrito(e) {
 
 function finalizarCompra() {
     localStorage.removeItem("carrito")
-    renderizarCarrito([])
+    renderizarCarrito()
 }
