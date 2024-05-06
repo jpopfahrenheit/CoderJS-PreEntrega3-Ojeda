@@ -1,0 +1,142 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: rgba(147, 242, 188, 1);
+}
+
+.encabezado {
+    display: flex;
+    background: rgba(172, 153, 191, 1);
+    height: 80px;
+    color: white;
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: normal;
+    align-items: center;
+}
+
+.logo {
+    max-height: 70px;
+    margin: 0 20px 0 20px;
+}
+
+.encabezado input {
+    margin-left: 30px;
+    height: 30px;
+    width: 300px;
+    border: solid 1px white;
+    padding-left: 10px;
+}
+
+.lupa {
+    width: 30px;
+    background: white;
+    border: solid 1px white;
+    cursor: pointer;
+    border-left: 1px solid rgb(214, 214, 214);
+    padding-left: 4px;
+}
+#botonCarrito {
+    height: 40px;
+    margin: 0 20px 0 20px;
+    width: auto;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#botonCarrito:hover {
+
+    transform: scale(1.2);
+}
+
+#contenedorProductos {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin: 10px;
+
+}
+
+.tarjetaProducto {
+    margin: 10px;
+    padding: 10px;
+    height: 350px;
+    width: 204px;
+    border: 2px solid rgba(242, 121, 121, 1);
+    text-align: center;
+    border-radius: 10px;
+    background: rgba(242, 195, 109, 1);
+    color: black;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.tarjetaProducto img {
+    display: block;
+    height: 200px;
+    width: 200px;
+
+    border-radius: 10px;
+    border: 2px rgba(242, 121, 121, 1) solid;
+}
+
+.tarjetaProducto h3 {
+    padding: 0 0 0 5px;
+    text-align: left;
+    font-size: large;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.tarjetaProducto h4 {
+    padding: 0 0 0 5px;
+    text-align: left;
+    font-family: sans-serif;
+}
+
+.tarjetaProducto button {
+    height: 30px;
+    width: 150px;
+    border: 2px solid rgba(242, 121, 121, 1);
+    border-radius: 5px ;
+    position: absolute;
+    bottom: 15px;
+    left: 50%; /* Opcional: para centrar horizontalmente el botón */
+    transform: translateX(-50%);
+    background: rgba(242, 121, 121, 1);
+    cursor: pointer; 
+}
+
+.tarjetaProducto button:hover{
+    background:rgba(147, 242, 188, 1);
+}
+
+footer {
+
+    display: flex;
+    background: rgba(172, 153, 191, 1);
+    color: white;
+    text-align: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.sinStock {
+    background:#D3D3D3;
+    border: black;
+
+}
+
+.sinStock img {
+    opacity: 0.9;
+    border: black;
+}
+
+.oculto {
+    display: none;
+}
