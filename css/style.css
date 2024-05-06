@@ -9,6 +9,8 @@ body {
 
 .encabezado {
     display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
     background: rgba(172, 153, 191, 1);
     height: 80px;
     color: white;
@@ -16,8 +18,9 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: normal;
-    align-items: center;
+    text-align: center; /* Alinea el texto horizontalmente */
 }
+
 
 .logo {
     max-height: 70px;
@@ -41,7 +44,7 @@ body {
     padding-left: 4px;
 }
 
-#botonCarrito {
+#botonCarrito, #botonVolver {
     height: 40px;
     margin: 0 20px 0 20px;
     width: auto;
@@ -49,7 +52,7 @@ body {
     transition: transform 0.3s;
 }
 
-#botonCarrito:hover {
+#botonCarrito:hover, #botonVolver:hover {
 
     transform: scale(1.2);
 }
@@ -139,7 +142,7 @@ footer {
 }
 
 .oculto {
-    display: none;
+    display: none !important;
 }
 
 #contenedorCarrito {

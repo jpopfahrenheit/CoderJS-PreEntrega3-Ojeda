@@ -47,6 +47,12 @@ function principal(productos) {
     let carrito = carritoLS()
     renderizarCarrito(carrito)
 
+    let botonMostrarOcultar1 = document.getElementById("botonCarrito")
+    botonMostrarOcultar1.addEventListener("click", mostrarOcultar)
+
+    let botonMostrarOcultar2 = document.getElementById("botonVolver")
+    botonMostrarOcultar2.addEventListener("click", mostrarOcultar)
+
     renderizarProductos(productos)
 
     let botonBuscar = document.getElementById("botonBuscar")
@@ -57,15 +63,9 @@ function principal(productos) {
 
     renderizarProductos(productos)
 
-
+    let botonComprar = document.getElementById("comprar")
+    botonComprar.addEventListener("click", finalizarCompra)
 }
-
-
-
-
-
-
-
 
 function carritoLS() {
     let carrito = []
@@ -100,18 +100,12 @@ function renderizarProductos(productos) {
 
         let botonAgregarAlCarrito = document.getElementById("botonCarrito" + id)
         botonAgregarAlCarrito.addEventListener("click", (e) => agregarProductoAlCarrito(e, productos))
-
-
     })
 }
 
 function agregarProductoAlCarrito(e, productos) {
-    console.log(e)
-    console.log(productos)
     let carrito = carritoLS()
-    console.log(carrito)
     let idDelProducto = Number(e.target.id.substring(12))
-
     let posProductoEnCarrito = carrito.findIndex((producto) => producto.id === Number(idDelProducto))
     let productoBuscado = productos.find((producto) => producto.id === Number(idDelProducto))
 
@@ -140,7 +134,6 @@ function filtrarYRenderizarEnter(productos, e) {
         renderizarProductos(productosFiltrados)
         limpiarInput()
     }
-
 }
 
 function filtrarProductos(productos) {
@@ -150,6 +143,7 @@ function filtrarProductos(productos) {
         producto.genero.toLowerCase().includes(inputBusqueda)
     )
 }
+
 function limpiarInput() {
     document.getElementById("inputBusqueda").value = ""
 }
@@ -158,8 +152,6 @@ function renderizarCarrito() {
     let carrito = carritoLS()
     let contenedorCarrito = document.getElementById("contenedorCarrito")
     contenedorCarrito.innerHTML = `<h2>Carrito de compras</h2>`
-
-
     carrito.forEach(producto => {
         let tarjetaProductoCarrito = document.createElement("div")
         tarjetaProductoCarrito.className = "tarjetaProductoCarrito"
@@ -178,8 +170,6 @@ function renderizarCarrito() {
         `
         contenedorCarrito.appendChild(tarjetaProductoCarrito)
 
-
-
         let botonDecUnidad = document.getElementById("dec" + producto.id)
         botonDecUnidad.addEventListener("click", decrementarUnidad)
 
@@ -191,16 +181,14 @@ function renderizarCarrito() {
 
     })
     let totalCompra = calcularTotalCompra(carrito)
-
     let totalDiv = document.createElement("div")
     totalDiv.className = "totalCompra"
     totalDiv.innerHTML = `
     <p>Total de la compra: $${totalCompra}</p> 
-    <button id=comprar>Comprar</buton>
+    <button id=comprar>Finalizar compra</buton>
     `
     console.log(totalCompra)
-    contenedorCarrito.appendChild(totalDiv);
-
+    contenedorCarrito.appendChild(totalDiv)
 }
 
 function calcularTotalCompra(carrito) {
@@ -234,8 +222,25 @@ function decrementarUnidad(e) {
 function eliminarProductoDelCarrito(e) {
     let carrito = carritoLS()
     let id = Number(e.target.id.substring(8))
-    carrito = carrito.filter(producto => producto.id !== id) 
-    localStorage.setItem("carrito", JSON.stringify(carrito)) 
+    carrito = carrito.filter(producto => producto.id !== id)
+    localStorage.setItem("carrito", JSON.stringify(carrito))
     e.target.parentElement.remove()
     renderizarCarrito()
+}
+
+function mostrarOcultar(e) {
+    let contenedorCarrito = document.getElementById("contenedorCarrito")
+    let contenedorProductos = document.getElementById("contenedorProductos")
+    let botonCarrito = document.getElementById("botonCarrito")
+    let botonVolver = document.getElementById("botonVolver")
+
+    contenedorCarrito.classList.toggle("oculto")
+    contenedorProductos.classList.toggle("oculto")
+    botonCarrito.classList.toggle("oculto")
+    botonVolver.classList.toggle("oculto")
+}
+
+function finalizarCompra() {
+    localStorage.removeItem("carrito")
+    renderizarCarrito([])
 }
