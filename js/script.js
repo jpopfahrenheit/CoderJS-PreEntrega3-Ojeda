@@ -47,24 +47,19 @@ function principal(productos) {
     let carrito = carritoLS()
     renderizarCarrito(carrito)
 
+    renderizarProductos(productos)
+    
     let botonMostrarOcultar1 = document.getElementById("botonCarrito")
     botonMostrarOcultar1.addEventListener("click", mostrarOcultar)
 
     let botonMostrarOcultar2 = document.getElementById("botonVolver")
     botonMostrarOcultar2.addEventListener("click", mostrarOcultar)
 
-    renderizarProductos(productos)
-
     let botonBuscar = document.getElementById("botonBuscar")
     botonBuscar.onclick = () => filtrarYRenderizar(productos)
 
     let inputBusqueda = document.getElementById("inputBusqueda")
     inputBusqueda.addEventListener("keypress", (e) => filtrarYRenderizarEnter(productos, e))
-
-    renderizarProductos(productos)
-
-    let botonComprar = document.getElementById("comprar")
-    botonComprar.addEventListener("click", finalizarCompra)
 }
 
 function carritoLS() {
@@ -185,10 +180,14 @@ function renderizarCarrito() {
     totalDiv.className = "totalCompra"
     totalDiv.innerHTML = `
     <p>Total de la compra: $${totalCompra}</p> 
-    <button id=comprar>Finalizar compra</buton>
+    <button id=comprar>Finalizar compra</button>
     `
     console.log(totalCompra)
     contenedorCarrito.appendChild(totalDiv)
+
+    let botonComprar = document.getElementById("comprar")
+    console.log(botonComprar)
+    botonComprar.addEventListener("click", finalizarCompra)
 }
 
 function calcularTotalCompra(carrito) {
@@ -219,15 +218,6 @@ function decrementarUnidad(e) {
     renderizarCarrito()
 }
 
-function eliminarProductoDelCarrito(e) {
-    let carrito = carritoLS()
-    let id = Number(e.target.id.substring(8))
-    carrito = carrito.filter(producto => producto.id !== id)
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-    e.target.parentElement.remove()
-    renderizarCarrito()
-}
-
 function mostrarOcultar(e) {
     let contenedorCarrito = document.getElementById("contenedorCarrito")
     let contenedorProductos = document.getElementById("contenedorProductos")
@@ -238,6 +228,15 @@ function mostrarOcultar(e) {
     contenedorProductos.classList.toggle("oculto")
     botonCarrito.classList.toggle("oculto")
     botonVolver.classList.toggle("oculto")
+}
+
+function eliminarProductoDelCarrito(e) {
+    let carrito = carritoLS()
+    let id = Number(e.target.id.substring(8))
+    carrito = carrito.filter(producto => producto.id !== id)
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+    e.target.parentElement.remove()
+    renderizarCarrito()
 }
 
 function finalizarCompra() {
