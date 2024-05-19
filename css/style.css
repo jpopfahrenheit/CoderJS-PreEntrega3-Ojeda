@@ -25,7 +25,8 @@ body {
     text-align: center;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Asegura que el encabezado esté por encima de otros elementos */
+    z-index: 1000;
+    /* Asegura que el encabezado esté por encima de otros elementos */
     letter-spacing: 3px;
 
 }
@@ -41,6 +42,7 @@ body {
     width: 300px;
     border: solid 1px white;
     padding-left: 10px;
+    border-radius: 10px 0 0 10px;
 }
 
 .lupa {
@@ -50,6 +52,7 @@ body {
     cursor: pointer;
     border-left: 1px solid rgb(214, 214, 214);
     padding-left: 4px;
+    border-radius: 0 10px 10px 0;
 }
 
 #botonCarrito,
@@ -66,29 +69,41 @@ body {
 
     transform: scale(1.2);
 }
+
 section {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    align-content: start;
     flex-wrap: wrap;
-    gap: 20px;
     max-width: 1280px;
     margin: 60px auto;
     padding: 20px;
     flex: 1;
 }
+
+#contenedorBusqueda {
+    margin-top: 5px;
+    height: 30px;
+    width: 100%;
+    text-align: center;
+    font-size: large;
+    font-family: sans-serif;
+    font-weight: 600;
+
+}
+
 #contenedorProductos {
     display: flex;
     flex-wrap: wrap;
     padding: 10px;
-    margin: 10px;
+    margin: 0px 10px 0px 10px;
 
 }
 
 .tarjetaProducto {
     margin: 10px;
     padding: 10px;
-    height: 350px;
+    height: 380px;
     width: 204px;
     border: 2px solid rgba(242, 121, 121, 1);
     text-align: center;
@@ -138,17 +153,6 @@ section {
 
 .tarjetaProducto button:hover {
     background: rgba(147, 242, 188, 1);
-}
-
-footer {
-
-    display: flex;
-    background: rgba(172, 153, 191, 1);
-    color: white;
-    text-align: center;
-    justify-content: center;
-    padding: 10px 0;
-    margin-top: auto;
 }
 
 .sinStock {
@@ -268,4 +272,15 @@ footer {
     color: white;
     font-size: x-large;
     cursor: pointer;
+}
+
+footer {
+
+    display: flex;
+    background: rgba(172, 153, 191, 1);
+    color: white;
+    text-align: center;
+    justify-content: center;
+    padding: 10px 0;
+    margin-top: auto;
 }
